@@ -27,6 +27,7 @@ public class TicTacToeFragment extends Fragment implements View.OnClickListener,
     private TicTacToeViewModel viewModel;
     private FragmentTictactoeBinding gameBinding;
     private List<String> defaultSymbolsList = new ArrayList<>();
+    private Player gameWinner;
 
     @Override
     public View onCreateView(
@@ -52,6 +53,7 @@ public class TicTacToeFragment extends Fragment implements View.OnClickListener,
 
     @Override
     public void onClick(View view) {
+        gameWinner = null;
         gameBinding.currentPlayerState.setText("");
         viewModel.gameReset();
         ((BoardGridAdapter)gameBinding.board.getAdapter()).setBoardItemsData(defaultSymbolsList);
@@ -73,6 +75,7 @@ public class TicTacToeFragment extends Fragment implements View.OnClickListener,
 
     private void onWinnerChanged(Player winner) {
         if (winner != null) {
+            gameWinner = winner;
             final String text = String.format(getResources().getString(R.string.is_winner_text), winner.symbol);
             gameBinding.currentPlayerState.setText(text);
         }
@@ -96,7 +99,8 @@ public class TicTacToeFragment extends Fragment implements View.OnClickListener,
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int index, long l) {
         final TextView gridItem = (TextView) view;
-        if (!gridItem.getText().equals(BOARD_DEFAULT_SYMBOL)) {
+        if (gameWinner != null || !gridItem.getText().equals(BOARD_DEFAULT_SYMBOL)) {
+            // not allowing to change grid of the game after game win or when a cell has a symbol
             return;
         }
 
