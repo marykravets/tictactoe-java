@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">TicTacToe</string>
+
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">TicTacToe Fragment</string>
+
+    <string name="hello_first_fragment">Current Player:</string>
+    <string name="new_game">new game</string>
+    <string name="is_winner_text">%1$s is the winner!</string>
+</resources>
